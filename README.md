@@ -18,4 +18,4 @@ python2 visualization/visualize_npy.py [voxel.h5py]
 
 
 ## Sample
-![sample]()
+![sample](https://github.com/hardyqr/PointcloudVoxelizer/blob/master/sample/imgs/sample.png)
