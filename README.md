@@ -5,16 +5,17 @@
 ## Usage
 ### Convert
 ```
-python3 p_to_v_main.py [pointcloud.txt] [voxel.h5py] s
+python3 source/p_to_v_main.py [pointcloud.txt] [sample/voxel.h5py] [s]
 ```
-- `pointcloud.txt` should be in the list format [x,y,z,r,g,b,label]
-- `s` is the size of longest side after conversion
+- `pointcloud.txt`: source, should be in the list format [x y z r g b label]
+- `sample/voxel.h5py`: destination, voxel matrix stores as h5py file
+- `s`: the size of longest side after conversion
 
 ### Visualize
 ```
-python2 visualization/visualize_npy.py [voxel.h5py]
+python2 visualization/visualize_npy.py [sample/voxel.h5py]
 ```
-- requires Mayavi
+- requires [Mayavi](http://docs.enthought.com/mayavi/mayavi/)
 
 
 ## Sample
