@@ -11,7 +11,7 @@ class data_loader:
         self.ext = ext
         self.x, self.y, self.z = xyz_index
 
-    def __call__(self, xyz_range=None,threshold=10, mag_coeff=100):
+    def __call__(self, xyz_range=None,threshold=10, mag_coeff=100,_format='xyzrgbl'):
         if not xyz_range:
             xyz_range=[int(itm) for itm in [
         self.d[:, self.x].min(),
@@ -23,10 +23,10 @@ class data_loader:
         ]]
         full_list, list_matrix, label_matrix = self.__get_list_matrix__(xyz_range)
         if not self.ext:
-         threeD_xyz_rgb_label, threeD_matrix, threeD_label = self.__get_3D_matrix__(full_list, list_matrix, xyz_range, mag_coeff)
+            threeD_xyz_rgb_label, threeD_matrix, threeD_label = self.__get_3D_matrix__(full_list, list_matrix, xyz_range, mag_coeff,_format)
         else:
-        #TODO
-         raise "data_loader >> extension temporarily-unavailable !"
+            #TODO
+            raise "data_loader >> extension temporarily-unavailable !"
         return threeD_xyz_rgb_label, threeD_matrix, threeD_label, list_matrix, label_matrix
 
   # data matrix -(xyz range)-> list and label matrix 
@@ -45,7 +45,7 @@ class data_loader:
         # last column is label
 
     # list matrix -> 3D matrix
-    def __get_3D_matrix__(self, full_list, list_matrix, xyz_range, mag_coeff):
+    def __get_3D_matrix__(self, full_list, list_matrix, xyz_range, mag_coeff,_format):
         lx,ly,lz,hx,hy,hz = xyz_range
         magnifier = int(mag_coeff)/(hx-lx) # control the scale of x (to be ...)
         dx, dy, dz = map(int, [(hx-lx)*magnifier, (hy-ly)*magnifier, (hz-lz)*magnifier])
@@ -55,7 +55,7 @@ class data_loader:
         for itm in full_list:
             x,y,z = itm[[self.x, self.y, self.z]]
             threeD_xyz_rgb_label[int((x-lx)*magnifier)-1][int((y-ly)*magnifier)-1][int((z-lz)*magnifier)-1] = itm
-            threeD_matrix[int((x-lx)*magnifier)-1][int((y-ly)*magnifier)-1][int((z-lz)*magnifier)-1] = itm[0:6]
+            threeD_matrix[int((x-lx)*magnifier)-1][int((y-ly)*magnifier)-1][int((z-lz)*magnifier)-1] = itm[0:6]#to be fixed
             threeD_label[int((x-lx)*magnifier)-1][int((y-ly)*magnifier)-1][int((z-lz)*magnifier)-1] = itm[-1]
         return threeD_xyz_rgb_label, threeD_matrix, threeD_label
     
